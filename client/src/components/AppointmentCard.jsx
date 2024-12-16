@@ -48,7 +48,7 @@ const AppointmentCard = ({ appointment }) => {
                     <Typography variant="h6" sx={{ color: "#fff" }}>
                         {client_name}
                     </Typography>
-                    <Typography variant="body2" color="gray">
+                    <Typography variant="body2" sx={{ color: "#fff" }}>
                         Barber: {barber}
                     </Typography>
                     <Typography variant="body2" color="gray">
