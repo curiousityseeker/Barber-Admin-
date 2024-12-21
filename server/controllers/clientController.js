@@ -1,56 +1,49 @@
 import client from '../database/db.js';
-const addClient = async (req, res) => {
-    try {
-      await client.query("set search_path to 'admin'");
 
-      const { client_id, name, appointment_time, barber_id, status } = req.body;
-
-      const c_id = parseInt(client_id);
-      const b_id = parseInt(barber_id);
-
-      if (isNaN(c_id) || isNaN(b_id)) {
-        return res
-          .status(400)
-          .json({ error: "Invalid client_id or barber_id "  ,value: c_id });
-      }
-
-      const a_time = new Date(appointment_time);
-
-      // Ensure the appointment_time is a valid date
-      if (isNaN(a_time.getTime())) {
-        return res.status(400).json({ error: "Invalid appointment_time" });
-      }
-      const result = await client.query(
-        "INSERT INTO clients(client_id,client_name, appointment_time, barber_id, status) VALUES($1, $2, $3, $4,$5) RETURNING *",
-        [c_id, name, a_time, b_id, status]
-      );
-      res.status(200).json(result.rows);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+const fetchAppointment = async (req, res) => {
+  try {
+    await client.query("set search_path to 'admin'");
+    const result = await client.query("SELECT * FROM appointments where status = 'Upcoming' ORDER BY appointment_time ASC");
+    console.log(result.rows);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
-
-const fetchClients = async (req, res) => {
-    try {
-        await client.query("set search_path to 'admin'");
-        const result = await client.query('SELECT * FROM clients');
-        res.status(200).json(result.rows);  
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+const fetchAllAppointment = async (req, res) => {
+  try {
+    await client.query("set search_path to 'admin'");
+    const result = await client.query("SELECT * FROM appointments  ORDER BY appointment_time ASC");
+    res.status(200).json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
-
-const updateAppointmentStatus = async (req, res) => {
+const fetchUser = async (req, res) => {
     try {
+        let { id } = req.query;
+        id = parseInt(id);
         await client.query("set search_path to 'admin'");
-        const { id, status } = req.body;
         const result = await client.query(
-            "UPDATE clients SET status = $1 WHERE client_id = $2 RETURNING *",
-            [status, id]
+          "SELECT user_id, user_name, email FROM users WHERE user_id = $1",
+          [id]
         );
         res.status(200).json(result.rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
-export { addClient,fetchClients ,updateAppointmentStatus};
+const updateAppointmentStatus = async (req, res) => {
+    try {
+        await client.query("set search_path to 'admin'");
+        const { id, status,user_id } = req.body;
+        const result = await client.query(
+            "UPDATE appointments SET status = $1 WHERE user_id = $2 AND id = $3 RETURNING *",
+            [status, user_id, id]
+        );
+        res.status(200).json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+export { fetchAppointment ,updateAppointmentStatus,fetchUser ,fetchAllAppointment};

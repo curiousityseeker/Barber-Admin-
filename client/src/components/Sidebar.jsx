@@ -1,51 +1,78 @@
-import React from "react";
-import { Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import PeopleIcon from "@mui/icons-material/People";
-import TaskIcon from "@mui/icons-material/Assignment";
-import CloseIcon from "@mui/icons-material/Close";
-
-const drawerWidth = 240;
+import React from 'react';
+import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Collapse, IconButton } from '@mui/material';
+import CloseIcon from "@mui/icons-material/Close";   
+import { ExpandLess, ExpandMore, Dashboard, Person} from '@mui/icons-material';
+import BookOnlineIcon from '@mui/icons-material/BookOnline';
 
 const Sidebar = ({ open, toggleDrawer }) => {
+    const [openCardMenu, setOpenCardMenu] = React.useState(false);
+    const [openBarberMenu, setOpenBarberMenu] = React.useState(false);
+
+    const handleCardMenuClick = () => setOpenCardMenu(!openCardMenu);
+
+    const handleBarberMenuClick = () => setOpenBarberMenu(!openBarberMenu);
     return (
         <Drawer
             variant="persistent"
             anchor="left"
             open={open}
-            sx={{
-                width: drawerWidth,
-                flexShrink: 0,
-                "& .MuiDrawer-paper": {
-                    width: drawerWidth,
-                    boxSizing: "border-box",
-                    backgroundColor: "#1e1e1e",
-                    color: "#fff",
-                },
-            }}
+            sx={{ width: 240, flexShrink: 0, '& .MuiDrawer-paper': { width: 240, boxSizing: 'border-box' } }}
         >
-            <IconButton onClick={toggleDrawer} sx={{ color: "#fff", margin: 1 }}>
+            <IconButton onClick={toggleDrawer} sx={{ display: { xs: 'block', sm: 'none' } }}>
                 <CloseIcon />
             </IconButton>
+            <Box sx={{ p: 2, textAlign: 'center' }}>
+                <img src="../assets/media/logos/logo-light.png" alt="Logo" style={{ height: 30 }} />
+            </Box>
+
             <List>
-                <ListItem button>
-                    <ListItemIcon sx={{ color: "#fff" }}>
-                        <HomeIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Home" />
+                {/* Dashboard */}
+                <ListItem disablePadding>
+                    <ListItemButton href="/">
+                        <ListItemIcon>
+                            <Dashboard />
+                        </ListItemIcon>
+                        <ListItemText primary="Dashboard" />
+                    </ListItemButton>
                 </ListItem>
-                <ListItem button>
-                    <ListItemIcon sx={{ color: "#fff" }}>
-                        <PeopleIcon />
+
+                {/* Appointment Menu */}
+                <ListItemButton onClick={handleCardMenuClick}>
+                    <ListItemIcon>
+                        <Person />
                     </ListItemIcon>
-                    <ListItemText primary="Clients" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon sx={{ color: "#fff" }}>
-                        <TaskIcon />
+                    <ListItemText primary="Appointment" />
+                    {openCardMenu ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={openCardMenu} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItemButton sx={{ pl: 4 }} href="../card/add-card.php">
+                            <ListItemText primary="Add Appointment" />
+                        </ListItemButton>
+                        <ListItemButton sx={{ pl: 4 }} href="/appointment-list">
+                            <ListItemText primary="All Appointment" />
+                        </ListItemButton>
+                    </List>
+                </Collapse>
+                
+                {/* Barber Menu */}
+                <ListItemButton onClick={handleBarberMenuClick}>
+                    <ListItemIcon>
+                        <BookOnlineIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Tasks" />
-                </ListItem>
+                    <ListItemText primary="Barber" />
+                    {openCardMenu ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={openBarberMenu} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItemButton sx={{ pl: 4 }} href="../barber/add-barber.php">
+                            <ListItemText primary="Add Barber" />
+                        </ListItemButton>
+                        <ListItemButton sx={{ pl: 4 }} href="../barber/barber-list.php">
+                            <ListItemText primary="All Barber" />
+                        </ListItemButton>
+                    </List>
+                </Collapse>
             </List>
         </Drawer>
     );
