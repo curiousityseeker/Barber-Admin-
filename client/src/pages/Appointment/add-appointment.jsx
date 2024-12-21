@@ -54,7 +54,6 @@ const AddAppointment = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await addAppointment(formData).then((data) => {
-            console.log(data);
             console.log("Appointment added");
         }).catch((err) => {
             console.log(err);

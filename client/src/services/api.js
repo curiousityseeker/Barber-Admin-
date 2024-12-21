@@ -90,3 +90,23 @@ export const updateAppointmentStatus = async (user_id, status, id) => {
     console.log(error);
   }
 };
+export const addBarber = async (formData) => {
+  try {
+    const { data } = await axios.post(`${url}/addBarber`, formData);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export const updateBarberStatus = async (id, status) => {
+  try {
+    console.log(id, status);
+    const { data } = await axios.put(`${url}/updateBarberStatus`, {
+      id,
+      status,
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}

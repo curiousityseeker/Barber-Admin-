@@ -58,7 +58,7 @@ function App() {
           <Route path="/add-appointment" element={<AddAppointment />} />
           <Route path="/barber-list" element={<BarberList />} />
           <Route path="/add-barber" element={<AddBarber />} />
-          <Route path="/barber-detail/:id" element={<BarberDetail />} />
+          {/* <Route path="/barber-detail/:id" element={<BarberDetail />} /> */}
         </Routes>
       </Layout>
     </BrowserRouter>
