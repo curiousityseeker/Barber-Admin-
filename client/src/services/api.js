@@ -59,6 +59,25 @@ export const fetchBarber = async (id) => {
     console.log(error);
   }
 };
+
+
+export const addAppointment = async (formData) => {
+  try {
+    const { data } = await axios.post(`${url}/addAppointment`, formData);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const barberList = async () => {
+  try {
+    const { data } = await axios.get(`${url}/allBarbers`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const updateAppointmentStatus = async (user_id, status, id) => {
   try {
     const { data } = await axios.put(`${url}/updateStatus`, {

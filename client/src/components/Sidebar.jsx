@@ -46,7 +46,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
                 </ListItemButton>
                 <Collapse in={openCardMenu} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }} href="../card/add-card.php">
+                        <ListItemButton sx={{ pl: 4 }} href="/add-appointment">
                             <ListItemText primary="Add Appointment" />
                         </ListItemButton>
                         <ListItemButton sx={{ pl: 4 }} href="/appointment-list">
@@ -61,14 +61,14 @@ const Sidebar = ({ open, toggleDrawer }) => {
                         <BookOnlineIcon />
                     </ListItemIcon>
                     <ListItemText primary="Barber" />
-                    {openCardMenu ? <ExpandLess /> : <ExpandMore />}
+                    {openBarberMenu ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
                 <Collapse in={openBarberMenu} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }} href="../barber/add-barber.php">
+                        <ListItemButton sx={{ pl: 4 }} href="/add-barber">
                             <ListItemText primary="Add Barber" />
                         </ListItemButton>
-                        <ListItemButton sx={{ pl: 4 }} href="../barber/barber-list.php">
+                        <ListItemButton sx={{ pl: 4 }} href="/barber-list">
                             <ListItemText primary="All Barber" />
                         </ListItemButton>
                     </List>

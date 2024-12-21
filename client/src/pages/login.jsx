@@ -7,40 +7,13 @@ import GlobalStyles from '@mui/joy/GlobalStyles';
 import CssBaseline from '@mui/joy/CssBaseline';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
-import Checkbox from '@mui/joy/Checkbox';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import IconButton from '@mui/joy/IconButton';
-import Link from '@mui/joy/Link';
+
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
-import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
-import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 
-const ColorSchemeToggle = (props) => {
-    const { onClick, ...other } = props;
-    const { mode, setMode } = useColorScheme();
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => setMounted(true), []);
-
-    return (
-        <IconButton
-            aria-label="toggle light/dark mode"
-            size="sm"
-            variant="outlined"
-            disabled={!mounted}
-            onClick={(event) => {
-                setMode(mode === 'light' ? 'dark' : 'light');
-                onClick?.(event);
-            }}
-            {...other}
-        >
-            {mode === 'light' ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
-        </IconButton>
-    );
-};
 
 const customTheme = extendTheme({ defaultColorScheme: 'dark' });
 
@@ -86,23 +59,20 @@ const Login = () => {
             <GlobalStyles
                 styles={{
                     ':root': {
-                        '--Form-maxWidth': '800px',
                         '--Transition-duration': '0.4s',
+                    },
+                    'html, body': {
+                        overflow: 'hidden', // Prevent scroll
                     },
                 }}
             />
             <Box
                 sx={(theme) => ({
                     width: '100%',
-                    height: '100vh', // Ensure the box takes full height of the viewport
                     display: 'flex',
                     justifyContent: 'center', // Center horizontally
                     alignItems: 'center', // Center vertically
-                    backdropFilter: 'blur(12px)',
-                    backgroundColor: 'rgba(255 255 255 / 0.2)',
-                    [theme.getColorSchemeSelector('dark')]: {
-                        backgroundColor: 'rgba(19 19 24 / 0.4)',
-                    },
+                    
                 })}
             >
                 <Box
@@ -125,7 +95,7 @@ const Login = () => {
                             width: '100%',
                             maxWidth: 500,
                             borderRadius: 'sm',
-                            boxShadow: '0px 4px 12px rgba(0,0,0,0.1)', // Added some shadow for visual appeal
+                            boxShadow: '0px 4px 100px rgba(255, 217, 217, 0.1)', // Added some shadow for visual appeal
                             padding: 3,
                         }}
                     >

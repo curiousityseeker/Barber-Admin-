@@ -1,10 +1,23 @@
 import client from '../database/db.js';
-
+const addAppointment = async (req, res) => {
+    try {
+        await client.query("set search_path to 'admin'");
+        let { customer_name, barber_id, appointment_time, status, payment_status } = req.body;
+        appointment_time = new Date(appointment_time);
+        const result = await client.query(
+            "INSERT INTO appointments (customer_name, barber_id, appointment_time, status, payment_status) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [customer_name, barber_id, appointment_time, status, payment_status]
+        );
+        console.log("Inserted");
+        res.status(201).json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
 const fetchAppointment = async (req, res) => {
   try {
     await client.query("set search_path to 'admin'");
     const result = await client.query("SELECT * FROM appointments where status = 'Upcoming' ORDER BY appointment_time ASC");
-    console.log(result.rows);
     res.status(200).json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -46,4 +59,4 @@ const updateAppointmentStatus = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
-export { fetchAppointment ,updateAppointmentStatus,fetchUser ,fetchAllAppointment};
+export { fetchAppointment ,updateAppointmentStatus,fetchUser ,fetchAllAppointment,addAppointment};

@@ -1,9 +1,11 @@
 import express from 'express';
-import { fetchAppointment, fetchUser, updateAppointmentStatus,fetchAllAppointment} from "../controllers/clientController.js";
-import { fetchBarber } from "../controllers/barberController.js";
+import { fetchAppointment, fetchUser, updateAppointmentStatus,fetchAllAppointment, addAppointment} from "../controllers/clientController.js";
+import { BarberList, fetchBarber } from "../controllers/barberController.js";
 const router = express.Router();
 
 router.get('/allClients',fetchAppointment);
+router.post('/addAppointment',addAppointment);
+router.get('/allBarbers',BarberList);
 router.get('/allAppointments',fetchAllAppointment);
 router.get('/user/:id?',fetchUser);
 router.get("/barber/:id?",fetchBarber);

@@ -16,7 +16,7 @@ import { useState } from "react";
 import { fetchBarber, updateAppointmentStatus, fetchUser } from "../../services/api.js";
 
 const AppointmentCard = ({ appointment }) => {
-    const { id, barber_id, appointment_time, status, user_id } = appointment;
+    const { id, barber_id, appointment_time, status, user_id, customer_name } = appointment;
     const date = new Date(appointment_time).toLocaleDateString();
     const time = new Date(appointment_time).toLocaleTimeString();
     const [barber, setBarber] = useState("");
@@ -34,7 +34,9 @@ const AppointmentCard = ({ appointment }) => {
 
     useEffect(() => {
         callBarber();
-        callUser();
+        if(user_id){
+            callUser();
+        }
     }, []);
 
     const colors = {
@@ -67,11 +69,11 @@ const AppointmentCard = ({ appointment }) => {
             {/* Left Section */}
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <Avatar sx={{ bgcolor: "#1976d2" }}>
-                    {client_name.charAt(0).toUpperCase()}
+                    {user_id ? client_name.charAt(0).toUpperCase() : customer_name.charAt(0).toUpperCase() }
                 </Avatar>
                 <Box>
                     <Typography variant="h6" sx={{ color: "#fff" }}>
-                        {client_name}
+                        {user_id ? client_name: customer_name}
                     </Typography>
                     <Typography variant="body2" sx={{ color: "#fff" }}>
                         Barber: {barber}

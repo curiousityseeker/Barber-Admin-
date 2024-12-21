@@ -54,7 +54,7 @@ const Navbar = ({ toggleDrawer }) => {
                         <AccountCircleIcon />
                     </IconButton>
                     <Menu anchorEl={anchorEl} open={openMenu} onClose={handleMenuClose}>
-                        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+                        {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
                         <MenuItem onClick={handleLogout}>Sign Out</MenuItem>
                     </Menu>
                 </Box>
